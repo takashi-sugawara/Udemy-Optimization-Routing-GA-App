@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import time
 import numpy as np
+import os
 import logic
 
 st.set_page_config(page_title="Route GA Optimizer", layout="wide", page_icon="🗺️")
@@ -35,8 +36,8 @@ def main():
             file_to_load = uploaded_file
             st.session_state.use_sample = False # Reset if a file is actually uploaded
         else:
-            # GitHubや別環境で動かすために「相対パス（このファイルと同じフォルダ）」を指定します
-            file_to_load = 'route_inputs_example.xlsx'
+            # GitHubやCloud(Streamlit Community Cloud)等で動かすために、絶対パス（このスクリプトファイルからの相対位置）を動的に取得します
+            file_to_load = os.path.join(os.path.dirname(__file__), 'route_inputs_example.xlsx')
             
         nodes_df_raw, paths_df_raw = load_excel_data(file_to_load)
         
